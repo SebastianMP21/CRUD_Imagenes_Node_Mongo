@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>CRUD Contacto</title>
+    <style>
+        .container{
+            max-width: 960px;
+        }
+    </style>
+  </head>
+  <body>    
+    <div class="container">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h4>Datos del Contacto</h4>
+            <form action="/crear" method="POST" enctype="multipart/form-data">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input id="nombre" name="nombre" type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input id="apellido" name="apellido" type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="numero" class="form-label">Número</label>
+                    <input id="numero" name="numero" type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="foto" class="form-label">Foto</label>
+                  <input id ="foto" name="foto" type="file" class="form-control" required/>
+                </div>
+         </div> 
+                <button type="submit" class="w-100 btn btn-guardar btn-lg"><i class="bi bi-save"></i>Registrar Carga</button>
+            </form>
+            <!-- Tabla Contacto  -->
+            <table id="tablaContactos" class="table mt-4">
+                <thead>
+                    <tr>
+                        <th style="display: none;">ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Foto</th>
+                        <th>Número</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% contactos.forEach( (contacto) => { %>
+                        <tr>
+                            <td style="display: none;"><%= contacto._id %></td>
+                            <td><%= contacto.nombre %></td>
+                            <td><%= contacto.apellido %></td>
+                            <td><%= contacto.email %></td>
+                            <td><img src="<%= contacto.foto %>" width="100px"></td>
+                            <td><%= contacto.numero %></td>
+                            <td>
+                                <a type="button" class="btnEditar btn btn-outline-primary bi bi-pencil"></a>
+                                <a href="/borrar/<%= contacto._id %>" class="btn btn-outline-danger bi bi-trash"></a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+    </div>
+    
+    <!-- Modal para Editar   -->
+    <div id="modalContacto" class="modal fade" tabindex="-1" aria-labelledby="modalContacto" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Info</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="/editar" method="POST" enctype="multipart/form-data">
+                  <input name="id_editar" id="id_editar" type="text" hidden>
+                <div class="mb-3">
+                  <label for="nombre_editar" class="col-form-label">Nombre:</label>
+                  <input id="nombre_editar" name="nombre_editar" type="text" class="form-control" value="">
+                </div>
+                <div class="mb-3">
+                  <label for="apellido_editar" class="col-form-label">Apellido:</label>
+                  <input id="apellido_editar" name="apellido_editar" type="text" class="form-control" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="email_editar" class="col-form-label">Email:</label>
+                    <input id="email_editar" name="email_editar" type="text" class="form-control" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="numero_editar" class="col-form-label">Numero:</label>
+                    <input id="numero_editar" name="numero_editar" type="number" class="form-control" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="foto_editar" class="col-form-label">Foto:</label>
+                    <input id ="foto_editar " name="foto_editar" type="file" class="form-control" value=""/>
+                </div>
+            </div>
+            <div class="modal-footer">              
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+            </div>
+          </form>
+          </div>
+        </div>
+    </div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="js/code.js"></script>
+  </body>
+</html>
